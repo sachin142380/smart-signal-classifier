@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo
 
-👉 https://https://smart-signal-classifier-xeupycs2znm74sqqmsjrtk.streamlit.app
+👉 https://smart-signal-classifier-xeupycs2znm74sqqmsjrtk.streamlit.app
 
 ---
 
