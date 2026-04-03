@@ -138,7 +138,7 @@ with tab3:
                 cm,
                 annot=True,
                 fmt="d",
-                cmap="Blues"
+                cmap="Blues",
                 xticklabels=np.unique(y),
                 yticklabels=np.unique(y)
             )
