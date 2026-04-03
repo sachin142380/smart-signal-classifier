@@ -115,26 +115,17 @@ with tab3:
     
     st.subheader("📈 Model Analytics")
     
-    if not use_cnn:
-        if st.button("Show Confusion Matrix"):
-            
-            y_pred = model.predict(X)
-            cm = confusion_matrix(y, y_pred)
-            
-            fig, ax = plt.subplots(figsize=(8,6))
-            
-            sns.heatmap(
-                cm,
-                annot=True,
-                fmt="d",
-                cmap="Blues",
-                xticklabels=np.unique(y),
-                yticklabels=np.unique(y)
-            )
-            
-            st.pyplot(fig)
-    else:
-        st.info("Confusion matrix disabled for CNN (can add later)")
+    if st.button("Show Confusion Matrix"):
+        
+        y_pred = model.predict(X)
+        cm = confusion_matrix(y, y_pred)
+        
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=signal_types, yticklabels=signal_types, ax=ax)
+        ax.set_xlabel("Predicted")
+        ax.set_ylabel("True")
+        ax.set_title("Confusion Matrix")
+        st.pyplot(fig)
         
 # ---------------- FOOTER ----------------
 st.markdown("---")
