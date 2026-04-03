@@ -10,7 +10,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from model import train_model
 from utils import generate_signal, extract_features, t
-from cnn_model import train_cnn
+
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="AI Signal Analyzer", layout="wide")
@@ -37,16 +37,9 @@ noise = st.sidebar.slider("Noise Level", 0.0, 0.5, 0.1)
 
 uploaded_file = st.sidebar.file_uploader("Upload Audio (.wav)", type=["wav"])
 
-# 🔥 CNN TOGGLE
-use_cnn = st.sidebar.checkbox("Use Deep Learning (CNN)")
 
 # ---------------- LOAD MODEL ----------------
-if use_cnn:
-    model = train_cnn(generate_signal, signal_types)
-    scaler = None
-    X, y = None, None
-else:
-    model, scaler, X, y = train_model()
+model, scaler, X, y = train_model()
 
 # ---------------- TABS ----------------
 tab1, tab2, tab3 = st.tabs(["📊 Signal", "🎧 Audio", "📈 Analytics"])
@@ -62,14 +55,10 @@ with tab1:
         sig = sig + np.random.normal(0, noise, len(sig))
         
         # 🔥 CNN vs ML switch
-        if use_cnn:
-            input_sig = sig.reshape(1, 500, 1)
-            pred_idx = np.argmax(model.predict(input_sig), axis=1)[0]
-            pred = signal_types[pred_idx]
-        else:
-            features = extract_features(sig)
-            features = scaler.transform([features])
-            pred = model.predict(features)[0]
+
+        features = extract_features(sig)
+        features = scaler.transform([features])
+        pred = model.predict(features)[0]
         
         st.success(f"Predicted Signal: {pred}")
         
